@@ -36,9 +36,24 @@ hydra -L users.txt -P pass.txt < ip-адрес > ssh
 Дополнительная информация по hydra: https://kali.tools/?p=1847.
 
 Включение защиты SSH для Fail2Ban:
-открыть файл /etc/fail2ban/jail.conf,
-найти секцию ssh,
+открыть файл /etc/fail2ban/jail.conf, найти секцию ssh,
 установить enabled в true.
 Дополнительная информация по Fail2Ban:https://putty.org.ru/articles/fail2ban-ssh.html.
 
 В качестве ответа пришлите события, которые попали в логи Suricata и Fail2Ban, прокомментируйте результат.
+
+### Ответ 2
+Была проведена атака на подбор пароля для службы SSH, согласно условиям задания.
+
+Логи fail2ban:
+![alt text](https://github.com/death13rule/screenshots/blob/229f7698d10d1378fe30e8274b9f4406bd35fde7/fail2ban%20log%20(hydra).png)
+
+На скриншоте мы видим, что система fail2ban зафиксировала попытки подбора паролей и через некоторое количество забанила атакующий хост.
+
+Логи Suricata:
+![alt text](https://github.com/death13rule/screenshots/blob/229f7698d10d1378fe30e8274b9f4406bd35fde7/suricata%20log%20(hydra).png)
+
+На скриншоте видно, что аномальные попытки подключения к службе SSH так же фиксировались системой Suricata. Видно что атакующих хост выполняет подключения с разных портов для обхода простейших блокировок
+
+Итог двух заданий - выполнена классическая схема SSH Brute-Force. 1 Этап разведка, второй этап - подбор логинов и паролей.
+
